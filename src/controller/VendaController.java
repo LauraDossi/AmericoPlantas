@@ -33,6 +33,10 @@ public class VendaController {
         }
     }
 
+    public void setView(VendaView view) {
+        this.view = view;
+    }
+
     public Produto pesquisarProduto(String termo) {
         if (termo == null || termo.trim().isEmpty()) return null;
         for (Produto p : produtoDAO.listar()) {
