@@ -38,6 +38,7 @@ public class VendaView extends JPanel {
 
     public VendaView() {
         controller = new VendaController();
+        controller.setView(this);
         produtoController = new ProdutoController();
         usuarioController = new UsuarioController();
         clienteController = new ClienteController();
