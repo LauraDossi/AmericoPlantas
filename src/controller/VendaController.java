@@ -54,38 +54,38 @@ public class VendaController {
     }
 
     public double adicionarItem(
-            String codigo, String descricao,
-            String quantidadeTexto, String valorTexto,
-            DefaultTableModel modelItens,
-            List<Object[]> itensVenda, double totalAtual) {
+        String codigo, String descricao,
+        String quantidadeTexto, String valorTexto,
+        DefaultTableModel modelItens,
+        List<Object[]> itensVenda, double totalAtual) {
 
         if (codigo.isEmpty() || descricao.isEmpty()) {
             view.exibirMensagem("Preencha o código e descrição do produto!");
             return totalAtual;
         }
-
+    
         Produto produto = buscarProdutoPorCodigo(codigo);
         if (produto != null && "Indisponível".equals(produto.getStatus())) {
             view.exibirMensagem("O produto \"" + produto.getNome() + "\" está indisponível e não pode ser adicionado ao carrinho!");
             return totalAtual;
         }
-
+    
         try {
-            int quantidade = Integer.parseInt(quantidadeTexto);
-            double valorUnitario = Double.parseDouble(valorTexto);
+            int quantidade = Validador.parseInteiroNaoNegativo(quantidadeTexto, "quantidade");
+            double valorUnitario = Validador.parseDecimalNaoNegativo(valorTexto, "valor unitário");
             double subTotal = quantidade * valorUnitario;
-
+    
             modelItens.addRow(new Object[]{
                     codigo, descricao, quantidade,
                     String.format("R$ %.2f", valorUnitario),
                     String.format("R$ %.2f", subTotal)
             });
-
+    
             itensVenda.add(new Object[]{codigo, descricao, quantidade, valorUnitario, subTotal});
             return totalAtual + subTotal;
-
-        } catch (NumberFormatException e) {
-            view.exibirMensagem("Quantidade ou valor inválido!");
+    
+        } catch (Validador.ValidacaoException e) {
+            view.exibirMensagem(e.getMessage());
             return totalAtual;
         }
     }
