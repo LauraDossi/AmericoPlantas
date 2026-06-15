@@ -37,6 +37,9 @@ public class ProdutoController {
         }
 
         try {
+            int estoque = Validador.parseInteiroNaoNegativo(view.getTxtEstoque().getText(), "estoque");
+            double preco = Validador.parseDecimalNaoNegativo(view.getTxtPreco().getText(), "preço");
+
             String dataFabricacaoTexto = view.getTxtDataFabricacao().getText().trim();
             String dataValidadeTexto = view.getTxtDataValidade().getText().trim();
 
@@ -46,7 +49,6 @@ public class ProdutoController {
             if (!dataFabricacaoTexto.isEmpty()) {
                 dataFabricacao = LocalDate.parse(dataFabricacaoTexto, formato);
             }
-
             if (!dataValidadeTexto.isEmpty()) {
                 dataValidade = LocalDate.parse(dataValidadeTexto, formato);
             }
@@ -54,8 +56,8 @@ public class ProdutoController {
             Produto produto = new Produto(
                     view.getTxtNome().getText(),
                     (String) view.getCbTipo().getSelectedItem(),
-                    Integer.parseInt(view.getTxtEstoque().getText()),
-                    Double.parseDouble(view.getTxtPreco().getText()),
+                    estoque,
+                    preco,
                     (String) view.getCbStatus().getSelectedItem(),
                     dataFabricacao,
                     dataValidade
@@ -96,6 +98,9 @@ public class ProdutoController {
         int id = (int) view.getModel().getValueAt(linha, 0);
 
         try {
+            int estoque = Validador.parseInteiroNaoNegativo(view.getTxtEstoque().getText(), "estoque");
+            double preco = Validador.parseDecimalNaoNegativo(view.getTxtPreco().getText(), "preço");
+
             String dataFabricacaoTexto = view.getTxtDataFabricacao().getText().trim();
             String dataValidadeTexto = view.getTxtDataValidade().getText().trim();
 
@@ -105,7 +110,6 @@ public class ProdutoController {
             if (!dataFabricacaoTexto.isEmpty()) {
                 dataFabricacao = LocalDate.parse(dataFabricacaoTexto, formato);
             }
-
             if (!dataValidadeTexto.isEmpty()) {
                 dataValidade = LocalDate.parse(dataValidadeTexto, formato);
             }
@@ -113,8 +117,8 @@ public class ProdutoController {
             Produto produto = new Produto(
                     view.getTxtNome().getText(),
                     (String) view.getCbTipo().getSelectedItem(),
-                    Integer.parseInt(view.getTxtEstoque().getText()),
-                    Double.parseDouble(view.getTxtPreco().getText()),
+                    estoque,
+                    preco,
                     (String) view.getCbStatus().getSelectedItem(),
                     dataFabricacao,
                     dataValidade
